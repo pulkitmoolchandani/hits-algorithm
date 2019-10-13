@@ -1,0 +1,47 @@
+#input adjacency matrix
+import numpy as np
+L = np.array([[0,1,1,0,0,0],[0,0,0,0,0,0],[1,1,0,0,1,0],[0,0,0,0,1,1],[0,0,0,1,0,1],[0,0,0,1,0,0]])
+print(L)
+n=len(L)
+L_T = np.transpose(L)
+H=[]
+A=[]
+H.append(np.ones((n,1)))
+A.append(np.ones((n,1)))
+e=0.05
+c=1
+k=0
+while c:
+    H.append((L.dot(L_T).dot(H[k])))
+    H[k+1]=H[k+1]/np.linalg.norm(H[k+1])
+    a=abs((H[k+1]-H[k]))<e
+    stop = a.all()
+    if stop:
+        c=0
+
+    k=k+1
+c=1
+k=0
+while c:
+    A.append((L_T.dot(L).dot(A[k])))
+    A[k+1]=A[k+1]/np.linalg.norm(A[k+1])
+    a=abs((A[k+1]-A[k]))<e
+    stop = a.all()
+    if stop:
+        c=0
+
+    k=k+1
+    #Hubs
+for i in range(len(H)):
+    print('--------------------------------')
+    print(f'Iteration {i}')
+    
+    print(H[i])
+    print('--------------------------------')
+ #authority
+for i in range(len(A)):
+    print('--------------------------------')
+    print(f'Iteration {i}')
+    
+    print(A[i])
+    print('--------------------------------')
